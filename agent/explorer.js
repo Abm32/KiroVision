@@ -56,10 +56,16 @@ async function explore(page, options, logger, screenshotter) {
       }
 
       // Filter out already-clicked elements
-      const fresh = allElements.filter(el => !tracker.hasClicked(tracker.elementKey(el)));
+      let fresh = allElements.filter(el => !tracker.hasClicked(tracker.elementKey(el)));
       if (!fresh.length) {
-        logger.info('All elements already explored — stopping');
-        break;
+        // Wait for dynamic content — page state may have changed
+        await page.waitForTimeout(2000);
+        const retryElements = await findInteractableElements(page);
+        fresh = retryElements.filter(el => !tracker.hasClicked(tracker.elementKey(el)));
+        if (!fresh.length) {
+          logger.info('All elements already explored — stopping');
+          break;
+        }
       }
 
       // 4. Prioritize elements (priority tier)

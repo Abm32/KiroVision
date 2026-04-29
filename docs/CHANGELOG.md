@@ -5,6 +5,12 @@ All notable changes to RunSight will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-04-29
+
+### Changed
+- Promoted v0.1.0 pre-release to v1.0.0 production ready
+- Merged `v0.1.0-dev` branch into `main`
+
 ## [0.1.0] - 2026-04-29
 
 ### Added

@@ -30,14 +30,19 @@ function validateLLMConfig(provider) {
  * @param {Array} elements - Available interactable elements
  * @param {Array<string>} history - Previous action descriptions
  * @param {string} provider - 'openai' or 'anthropic'
+ * @param {string|null} [guide] - .runsight guide content
  * @returns {Promise<{elementIndex: number, reason: string}|null>}
  */
-async function getNextAction(screenshotBuffer, elements, history, provider) {
+async function getNextAction(screenshotBuffer, elements, history, provider, guide) {
   const elementList = elements.map((el, i) =>
     `[${i}] ${el.tagName} "${el.text || el.name || el.href || ''}" (${el.inputType || el.type || 'clickable'})`
   ).join('\n');
 
-  const userMsg = `Current page elements:\n${elementList}\n\nPrevious actions:\n${history.join('\n') || 'None yet'}\n\nWhich element should I interact with next?`;
+  let userMsg = '';
+  if (guide) {
+    userMsg += `PROJECT GUIDE (follow these instructions for navigation):\n${guide}\n\n`;
+  }
+  userMsg += `Current page elements:\n${elementList}\n\nPrevious actions:\n${history.join('\n') || 'None yet'}\n\nWhich element should I interact with next?`;
   const b64 = screenshotBuffer.toString('base64');
 
   try {

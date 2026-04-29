@@ -2,6 +2,9 @@
 
 > 🚀 **v1.1.0** — Production Ready
 
+[![npm version](https://img.shields.io/npm/v/runsight.svg)](https://www.npmjs.com/package/runsight)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 Autonomous agent that runs projects, explores them via browser, captures screenshots, and records demo videos — automatically.
 
 Designed as a pluggable **agent skill** for Kiro CLI, Claude, and Cursor.
@@ -27,7 +30,7 @@ Designed as a pluggable **agent skill** for Kiro CLI, Claude, and Cursor.
 npm install -g runsight
 ```
 
-Or use directly:
+Or use directly without installing:
 
 ```bash
 npx runsight ./my-project

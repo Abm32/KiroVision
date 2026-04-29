@@ -5,7 +5,7 @@ All notable changes to RunSight will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.0] - Unreleased
+## [0.1.0] - 2026-04-29
 
 ### Added
 - Project scaffolding and directory structure
@@ -22,3 +22,4 @@ Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 - LLM-guided exploration strategy (OpenAI GPT-4o + Anthropic Claude vision)
 - Browser explorer (3-tier strategy orchestration, stop conditions, summary)
 - Main orchestrator pipeline (detect → run → explore → capture → report)
+- Full documentation (ARCHITECTURE, API, ROADMAP, CONTRIBUTING, CHANGELOG)

@@ -147,6 +147,32 @@ outputs/
 | Python | `requirements.txt`, `pyproject.toml` | Django, Flask, FastAPI |
 | Static | `index.html` | Plain HTML/CSS/JS |
 
+## `.runsight` Guide File
+
+Add a `.runsight` file to your project root to tell the agent how to navigate your app. This dramatically improves exploration accuracy.
+
+```markdown
+# Navigation Guide
+
+## Pages
+- Home page loads at /
+- Click "BOOT SEQUENCE" to start the game
+- Click "♫ MUSIC" to toggle audio
+- Game over screen shows "REBOOT NEXUS" button
+
+## Important flows
+1. Click "BOOT SEQUENCE" → game starts → player runs automatically
+2. Wait for game over → click "REBOOT NEXUS" to restart
+
+## Skip these
+- Volume slider (range input) — not useful for exploration
+- Canvas element — game renders here, no clicks needed
+```
+
+The agent reads this file and includes it in every LLM decision, so it knows which buttons matter and what order to click them.
+
+Supported filenames: `.runsight`, `.runsight.md`, `RUNSIGHT.md`
+
 ## Limitations (v0.1.0)
 
 - Single-page apps with client-side routing may not be fully explored

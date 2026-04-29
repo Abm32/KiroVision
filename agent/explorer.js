@@ -5,6 +5,36 @@ const { findInteractableElements, executeAction } = require('../strategies/heuri
 const { prioritizeElements, createVisitTracker } = require('../strategies/priorityStrategy');
 const { getNextAction } = require('../strategies/llmStrategy');
 
+/** Key name mapping for .runsight guide */
+const KEY_MAP = {
+  'up': 'ArrowUp', 'down': 'ArrowDown', 'left': 'ArrowLeft', 'right': 'ArrowRight',
+  'space': 'Space', 'enter': 'Enter', 'escape': 'Escape', 'tab': 'Tab',
+  'w': 'w', 's': 's', 'a': 'a', 'd': 'd',
+  'arrowup': 'ArrowUp', 'arrowdown': 'ArrowDown', 'arrowleft': 'ArrowLeft', 'arrowright': 'ArrowRight'
+};
+
+/**
+ * Parse keyboard actions from .runsight guide.
+ * Looks for lines like: - Press ArrowUp to jump
+ * @param {string|null} guide
+ * @returns {Array<{key: string, description: string, delay: number}>}
+ */
+function parseKeyboardActions(guide) {
+  if (!guide) return [];
+  const actions = [];
+  const lines = guide.split('\n');
+  for (const line of lines) {
+    const match = line.match(/[-*]\s*(?:Press|Key|press|key)\s+(\S+)\s*(.*)/i);
+    if (match) {
+      const rawKey = match[1].replace(/[`"']/g, '');
+      const key = KEY_MAP[rawKey.toLowerCase()] || rawKey;
+      const description = match[2].replace(/^[-—–:]\s*/, '').trim();
+      actions.push({ key, description, delay: 500 });
+    }
+  }
+  return actions;
+}
+
 /**
  * Autonomously explore a web page using the 3-tier strategy.
  * @param {import('playwright').Page} page
@@ -54,20 +84,46 @@ async function explore(page, options, logger, screenshotter) {
       // Filter out already-clicked elements
       let fresh = allElements.filter(el => !tracker.hasClicked(tracker.elementKey(el)));
 
-      // If no fresh elements, poll for dynamic content (SPAs, games, modals)
+      // If no fresh elements, perform keyboard actions (games) and poll for new UI
       if (!fresh.length) {
-        logger.info('Waiting for new UI elements...');
-        for (let wait = 0; wait < 15; wait++) {
-          await page.waitForTimeout(2000);
-          allElements = await findInteractableElements(page);
-          fresh = allElements.filter(el => !tracker.hasClicked(tracker.elementKey(el)));
-          if (fresh.length) {
-            logger.info(`New elements found after ${(wait + 1) * 2}s`);
-            break;
+        const keys = parseKeyboardActions(options.guide);
+        if (keys.length) {
+          logger.info('Performing keyboard actions while waiting for UI...');
+          for (let round = 0; round < 3; round++) {
+            for (const key of keys) {
+              await page.keyboard.press(key.key);
+              logger.step(step, `Pressed ${key.key}`, key.description || '');
+              step++;
+              if (step > maxSteps) break;
+              await page.waitForTimeout(key.delay || 500);
+              // Take screenshot during gameplay
+              const gSS = await screenshotter.capture(page, step - 1, 'gameplay');
+              logger.addScreenshot(step - 1, gSS);
+            }
+            // Check if new DOM elements appeared
+            allElements = await findInteractableElements(page);
+            fresh = allElements.filter(el => !tracker.hasClicked(tracker.elementKey(el)));
+            if (fresh.length || step > maxSteps) break;
+            await page.waitForTimeout(1000);
           }
         }
+
+        // Still no elements — poll for dynamic content
+        if (!fresh.length && step <= maxSteps) {
+          logger.info('Waiting for new UI elements...');
+          for (let wait = 0; wait < 15; wait++) {
+            await page.waitForTimeout(2000);
+            allElements = await findInteractableElements(page);
+            fresh = allElements.filter(el => !tracker.hasClicked(tracker.elementKey(el)));
+            if (fresh.length) {
+              logger.info(`New elements found after ${(wait + 1) * 2}s`);
+              break;
+            }
+          }
+        }
+
         if (!fresh.length) {
-          logger.info('No new elements after 30s — stopping');
+          logger.info('No new elements — stopping');
           break;
         }
       }

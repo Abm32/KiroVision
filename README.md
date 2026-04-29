@@ -1,45 +1,66 @@
 # RunSight
 
-> 🚀 **v1.1.0** — Production Ready
+> **Your project demos itself.**
 
 [![npm version](https://img.shields.io/npm/v/runsight.svg)](https://www.npmjs.com/package/runsight)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Autonomous agent that runs projects, explores them via browser, captures screenshots, and records demo videos — automatically.
-
-Designed as a pluggable **agent skill** for Kiro CLI, Claude, and Cursor.
-
-## Features
-
-- Auto-detect project type (Node.js, Python, static)
-- Install dependencies and start dev servers
-- Launch browser and autonomously explore the UI
-- 3-tier exploration: heuristic → priority-based → LLM-guided
-- Capture full-page screenshots at each step
-- Record session video via Playwright
-- Output structured logs (`logs.txt`) and reports (`report.json`)
-
-## Requirements
-
-- Node.js 18+
-- Playwright (auto-installed with `npm install`)
-
-## Installation
-
-```bash
-npm install -g runsight
-```
-
-Or use directly without installing:
+The fastest path from code to proof. One command — your app is explored, recorded, and ready to share.
 
 ```bash
 npx runsight ./my-project
 ```
 
+RunSight runs your project, launches a browser, navigates the UI autonomously using AI vision, captures screenshots at every step, records a session video, and outputs a structured report. No config. No test scripts. No manual clicking.
+
+**Stop explaining your app. Let it show itself.**
+
+## Vision
+
+RunSight is evolving from a browser automation tool into the **default way to generate demos for software**.
+
+Today: one command turns any repo into screenshots, video, and a structured report.
+
+Tomorrow: one command turns any repo into a **shareable demo link** — ready for portfolios, recruiters, investors, Product Hunt, or teammates.
+
+The goal: **every `git push` auto-generates a living demo of your project.**
+
+## What It Does
+
+| You used to... | Now you... |
+|----------------|------------|
+| Manually click through your app after every change | Run one command |
+| Record your screen to show someone your project | Get an auto-generated video |
+| Write a paragraph explaining what your app does | Send a report.json |
+| Spend 20 min making a demo for a job application | Wait 8 seconds |
+
+## How It Works
+
+```
+npx runsight ./my-project
+
+🔍 Detecting project type...
+✅ Found: Node.js (Next.js)
+📦 Installing dependencies...
+🚀 Server started on :3000
+🌐 Browser launched
+🤖 Exploring UI (15 steps)...
+📸 15 screenshots captured
+🎬 session.mp4 recorded
+📊 report.json written
+✅ Done in 8.1s
+```
+
+1. **Detect** — identifies your project type and framework automatically
+2. **Run** — installs dependencies, starts the dev server, detects the port
+3. **Explore** — AI navigates your UI using a 3-tier strategy (heuristic → priority → LLM vision)
+4. **Capture** — screenshots every step, records full session video
+5. **Report** — outputs machine-readable `report.json` + human-readable `logs.txt`
+
 ## Quick Start
 
 ```bash
-# Explore a project with defaults (headless, video, 15 steps)
+# Explore with defaults (headless, video, 15 steps)
 runsight ./my-project
 
 # Skip video, limit to 10 steps
@@ -74,11 +95,10 @@ console.log(result.summary);     // 'Clicked Login → navigated to /dashboard �
 
 ## Agent Skill Integration
 
-RunSight is designed to be invoked by AI agents:
+RunSight is designed to be invoked by AI agents — your coding assistant runs it, reads the report, and understands your app without you explaining anything.
 
 **Kiro CLI / Claude:**
 ```bash
-# Agent runs this command, parses JSON report
 runsight /path/to/project --no-video --max-steps=5
 cat /path/to/project/outputs/report.json
 ```
@@ -123,7 +143,7 @@ outputs/
 
 ```json
 {
-  "version": "0.1.0",
+  "version": "1.1.0",
   "projectPath": "/path/to/project",
   "startTime": "2026-04-29T06:50:14.957Z",
   "endTime": "2026-04-29T06:50:23.042Z",
@@ -186,7 +206,25 @@ Analyze this project and create a .runsight file for the RunSight autonomous bro
 
 See [docs/GUIDE_TEMPLATE.md](docs/GUIDE_TEMPLATE.md) for the full prompt and examples.
 
-## Limitations (v0.1.0)
+## Where This Is Going
+
+RunSight is not a testing tool. It's the fastest path from code to proof.
+
+| Phase | What changes |
+|-------|-------------|
+| **Now (v1.1.0)** | One command → screenshots, video, report |
+| **Next (v1.2.0)** | Auto-edited highlight video, flow summaries, captions |
+| **Soon (v2.0.0)** | `runsight.dev/demo/abc123` — shareable demo links |
+| **Future (v3.0.0)** | `git push` → demo auto-generated in CI |
+
+See the full [Roadmap](docs/ROADMAP.md).
+
+## Requirements
+
+- Node.js 18+
+- Playwright (auto-installed with `npm install`)
+
+## Limitations (v1.1.0)
 
 - Single-page apps with client-side routing may not be fully explored
 - LLM-guided mode requires API keys and incurs costs

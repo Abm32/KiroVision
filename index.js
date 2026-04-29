@@ -50,7 +50,7 @@ async function runSight(options = {}) {
     });
 
     const pipeline = async () => {
-      console.log('🔍 RunSight v1.1.0');
+      console.log('🔍 RunSight v1.1.1');
       console.log(`📁 Project: ${opts.projectPath}`);
 
       // 1. Detect projects

@@ -5,6 +5,15 @@ All notable changes to RunSight will be documented in this file.
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Versioning follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-04-29
+
+### Changed
+- Repositioned project vision: "Your project demos itself" — from browser agent to demo generator
+- Updated package.json description and keywords to match new positioning
+- Rewrote README.md with vision section, before/after table, and roadmap preview
+- Rewrote ROADMAP.md with 3-phase evolution: demo generator → shareable links → workflow integration
+- Updated ARCHITECTURE.md with vision statement and future module placeholders
+
 ## [1.1.0] - 2026-04-29
 
 ### Added

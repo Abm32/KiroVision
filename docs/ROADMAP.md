@@ -1,6 +1,8 @@
 # Roadmap
 
-## v0.1.0 — Pre-release (Current)
+> RunSight is evolving from a browser automation tool into the **default way to generate demos for software**.
+
+## v0.1.0 — Pre-release ✅
 
 - [x] Project scaffolding and CLI
 - [x] Project type detection (Node.js, Python, static)
@@ -17,22 +19,70 @@
 - [x] Action summary generation
 - [x] Optional FFmpeg webm-to-mp4 conversion
 
-## v1.0.0 — Production Ready
+## v1.0.0 — Production Ready ✅
 
-- [ ] Comprehensive test suite
-- [ ] CI/CD pipeline (GitHub Actions)
-- [ ] Error recovery and retry logic
+- [x] Stable CLI and programmatic API
+- [x] Merged to main, tagged, published to npm
+
+## v1.1.0 — Guide-Aware Agent ✅ (Current)
+
+- [x] README.md-aware project detection
+- [x] `.runsight` guide file support
+- [x] Keyboard action support for games/interactive apps
+- [x] EADDRINUSE auto-recovery
+- [x] Graceful sub-service failure handling
+- [x] Dynamic UI polling (30s wait for new elements)
+- [x] Input filtering (skip range/hidden/color/file)
+- [x] CI/CD pipeline (GitHub Actions → npm auto-publish)
+
+## v1.2.0 — Demo Generator
+
+The shift from "recording tool" to "demo generator."
+
+- [ ] Auto-edited highlight video — trim dead time, keep only meaningful actions
+- [ ] Flow summary — human-readable narrative ("user signs up → clicks dashboard → views analytics")
+- [ ] Caption overlay — auto-generated text captions on video frames
+- [ ] Screenshot grid — single composite image of all steps for quick sharing
+- [ ] HTML report — visual report with embedded screenshots and video player
 - [ ] Configurable exploration depth per page
 - [ ] Custom action scripts (user-defined exploration steps)
-- [ ] HTML report with embedded screenshots
 
-## v1.1.0+ — Future
+## v2.0.0 — Shareable Demo Links
 
-- [ ] FFmpeg screen capture (outside-browser recording)
-- [ ] Parallel multi-page exploration
+The shift from "local output" to "shareable proof."
+
+- [ ] `runsight.dev` hosted platform
+- [ ] `runsight.dev/demo/abc123` — shareable demo URLs from any run
+- [ ] Embeddable demo widget for READMEs and portfolios
+- [ ] Demo versioning — compare demos across commits
+- [ ] Team sharing — private demo links with access control
+- [ ] PDF report generation
+
+**Use cases unlocked:**
+- Portfolio proof for job applications
+- Investor/recruiter demo links
+- Product Hunt launch assets
+- PR review — "here's what this change looks like"
+
+## v3.0.0 — Workflow Integration
+
+The shift from "tool you run" to "part of how software ships."
+
+- [ ] `git push` → demo auto-generated in CI (GitHub Actions, GitLab CI)
+- [ ] PR comment bot — auto-posts demo link on every pull request
+- [ ] Slack/Discord notifications with demo preview
 - [ ] MCP server integration for agent tooling
+- [ ] Plugin system for custom exploration strategies
+- [ ] Docker container for isolated execution
+- [ ] Parallel multi-page exploration
+
+**The end state:** every project has a living demo that updates itself.
+
+## Future Exploration
+
 - [ ] Accessibility audit during exploration
 - [ ] Performance metrics collection (LCP, FID, CLS)
-- [ ] PDF report generation
-- [ ] Docker container for isolated execution
-- [ ] Plugin system for custom strategies
+- [ ] FFmpeg screen capture (outside-browser recording)
+- [ ] Mobile viewport exploration
+- [ ] Authentication flow support (OAuth, magic links)
+- [ ] Multi-language project support (Ruby, Go, Rust)

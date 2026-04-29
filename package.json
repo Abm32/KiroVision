@@ -1,7 +1,7 @@
 {
   "name": "runsight",
-  "version": "1.1.0",
-  "description": "Autonomous agent that runs projects, explores them, captures screenshots, and records demo videos automatically",
+  "version": "1.1.1",
+  "description": "Your project demos itself. One command — your app is explored, recorded, and ready to share.",
   "main": "index.js",
   "bin": {
     "runsight": "cli.js"
@@ -11,13 +11,16 @@
     "postinstall": "npx playwright install chromium"
   },
   "keywords": [
+    "demo",
     "agent",
     "automation",
     "playwright",
     "screenshot",
     "video",
     "explorer",
-    "devtool"
+    "devtool",
+    "ai",
+    "proof"
   ],
   "author": "",
   "license": "MIT",

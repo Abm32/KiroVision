@@ -1,5 +1,14 @@
 # Architecture
 
+## Vision
+
+RunSight is the **fastest path from code to proof**. It's evolving from a browser automation tool into the default way to generate demos for software.
+
+The architecture is designed to support three phases:
+1. **v1.x** — Local agent: detect → run → explore → capture → report
+2. **v2.x** — Shareable output: local agent + hosted demo links (`runsight.dev`)
+3. **v3.x** — Workflow integration: CI triggers → auto-generated demos on every push
+
 ## Overview
 
 RunSight is a modular autonomous agent that detects, runs, and explores web projects.
@@ -62,6 +71,21 @@ graph TD
 - Sends screenshot + element list to GPT-4o or Claude
 - LLM decides which element to interact with next and why
 - Falls back to priority tier on API failure
+
+## Future Modules (Planned)
+
+These modules don't exist yet but represent the architectural direction:
+
+| Module | Phase | Responsibility |
+|--------|-------|----------------|
+| Demo Editor | v1.2.0 | Trim dead time from videos, generate highlight reels, add captions |
+| Flow Narrator | v1.2.0 | Generate human-readable flow summaries from step data |
+| Screenshot Grid | v1.2.0 | Composite single image from all step screenshots |
+| HTML Reporter | v1.2.0 | Visual report with embedded screenshots and video player |
+| Upload Service | v2.0.0 | Push outputs to `runsight.dev`, return shareable URL |
+| Demo Versioning | v2.0.0 | Compare demos across commits, track changes |
+| CI Plugin | v3.0.0 | GitHub Actions / GitLab CI integration, auto-trigger on push |
+| PR Bot | v3.0.0 | Auto-comment demo links on pull requests |
 
 ## Design Decisions
 

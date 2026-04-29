@@ -13,27 +13,31 @@ async function runProjects(projects, logger) {
   const running = [];
 
   for (const project of projects) {
-    logger.info(`Setting up ${project.name} (${project.framework})`);
+    try {
+      logger.info(`Setting up ${project.name} (${project.framework})`);
 
-    // Install dependencies
-    if (project.installCmd) {
-      logger.info(`Installing: ${project.installCmd}`);
-      await runCommand(project.installCmd, project.path, 120000);
+      // Install dependencies
+      if (project.installCmd) {
+        logger.info(`Installing: ${project.installCmd}`);
+        await runCommand(project.installCmd, project.path, 120000);
+      }
+
+      // Start dev server
+      logger.info(`Starting: ${project.runCmd}`);
+      const { proc, port } = await startServer(project);
+      const url = `http://localhost:${port}`;
+      logger.info(`${project.name} ready at ${url}`);
+
+      running.push({
+        process: proc,
+        url,
+        type: project.type,
+        framework: project.framework,
+        name: project.name
+      });
+    } catch (err) {
+      logger.error(`Failed to start ${project.name}: ${err.message} — skipping`);
     }
-
-    // Start dev server
-    logger.info(`Starting: ${project.runCmd}`);
-    const { proc, port } = await startServer(project);
-    const url = `http://localhost:${port}`;
-    logger.info(`${project.name} ready at ${url}`);
-
-    running.push({
-      process: proc,
-      url,
-      type: project.type,
-      framework: project.framework,
-      name: project.name
-    });
   }
 
   return running;
